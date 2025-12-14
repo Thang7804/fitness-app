@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#000000">
+    <TextView
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:text="← Back"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:padding="8dp"
+        android:clickable="true"
+        android:focusable="true"/>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        app:cardBackgroundColor="#1E1E1E"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="What equipment do you have available for your workouts?"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:padding="20dp"
+            android:textAlignment="center" />
+    </androidx.cardview.widget.CardView>
+
+    <RadioGroup
+        android:id="@+id/rgEquipment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/rbNoEquipment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No Equipment (Bodyweight only)"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:buttonTint="#FF9800" />
+
+        <RadioButton
+            android:id="@+id/rbHaveDumbbell"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Have Dumbbell"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:buttonTint="#FF9800" />
+    </RadioGroup>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        app:cardBackgroundColor="#1E1E1E"
+        android:layout_marginTop="24dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Do you have any health issues or injuries to consider?"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:padding="20dp"
+            android:textAlignment="center" />
+    </androidx.cardview.widget.CardView>
+
+    <RadioGroup
+        android:id="@+id/rgHealthIssues"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="8dp">
+
+        <RadioButton
+            android:id="@+id/rbNoIssues"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No health issues"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:buttonTint="#FF9800" />
+
+        <RadioButton
+            android:id="@+id/rbJointPain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Joint or knee pain"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:buttonTint="#FF9800" />
+
+        <RadioButton
+            android:id="@+id/rbBackPain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Back pain"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:buttonTint="#FF9800" />
+
+        <RadioButton
+            android:id="@+id/rbCardioIssues"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Heart or cardio-related issue"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:buttonTint="#FF9800" />
+
+    </RadioGroup>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnFinishSetup"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Finish Setup"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:backgroundTint="#FF9800"
+        app:cornerRadius="30dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="8dp" />
+
+</LinearLayout>

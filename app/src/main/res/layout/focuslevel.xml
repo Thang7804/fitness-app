@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#000000">
+
+    <TextView
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:text="← Back"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:padding="8dp"
+        android:clickable="true"
+        android:focusable="true"/>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        app:cardBackgroundColor="#1E1E1E"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Which body areas do you want to focus on?"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:padding="20dp"
+            android:textAlignment="center" />
+    </androidx.cardview.widget.CardView>
+
+    <!-- Đổi sang RadioGroup -->
+    <RadioGroup
+        android:id="@+id/rgBodyFocus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/rbFullBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Full Body"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:buttonTint="#FF9800" />
+
+        <RadioButton
+            android:id="@+id/rbUpperBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Upper Body (Chest, Arms, Shoulders)"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:buttonTint="#FF9800" />
+
+        <RadioButton
+            android:id="@+id/rbLowerBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lower Body (Legs, Glutes)"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:buttonTint="#FF9800" />
+
+        <RadioButton
+            android:id="@+id/rbCore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Core / Abs"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:buttonTint="#FF9800" />
+    </RadioGroup>
+
+    <!-- Câu hỏi 2: Fitness level -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        app:cardBackgroundColor="#1E1E1E"
+        android:layout_marginTop="24dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="What is your current fitness level?"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:padding="20dp"
+            android:textAlignment="center" />
+    </androidx.cardview.widget.CardView>
+
+    <RadioGroup
+        android:id="@+id/rgFitnessLevel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/rbBeginner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Beginner"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:buttonTint="#FF9800" />
+
+        <RadioButton
+            android:id="@+id/rbIntermediate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Intermediate"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:buttonTint="#FF9800" />
+
+        <RadioButton
+            android:id="@+id/rbAdvanced"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Advanced"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:buttonTint="#FF9800" />
+    </RadioGroup>
+
+    <!-- Khoảng đệm đẩy nút xuống cuối -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Nút Next -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnNextFocusLevel"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Next"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:backgroundTint="#FF9800"
+        app:cornerRadius="30dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="8dp" />
+
+</LinearLayout>

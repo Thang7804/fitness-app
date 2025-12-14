@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "52409166384",
+    "project_id": "ai-fitness-app-cbade",
+    "storage_bucket": "ai-fitness-app-cbade.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:52409166384:android:c569f858b90506b80fdbf5",
+        "android_client_info": {
+          "package_name": "com.app.aifitness"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0k9gUQKsjbv7YHQZ0HuHmox6rvtX0VpE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

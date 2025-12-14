@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#000000">
+
+    <TextView
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:text="← Back"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:padding="8dp"
+        android:clickable="true"
+        android:focusable="true"/>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        app:cardBackgroundColor="#1E1E1E"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="How many days per week do you want to work out?"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </androidx.cardview.widget.CardView>
+
+    <RadioGroup
+        android:id="@+id/rgDaysPerWeek"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/rb2Days"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2 Days"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:buttonTint="#FF9800" />
+
+        <RadioButton
+            android:id="@+id/rb3Days"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3 Days"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:buttonTint="#FF9800" />
+
+        <RadioButton
+            android:id="@+id/rb4Days"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="4 Days"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:buttonTint="#FF9800" />
+
+        <RadioButton
+            android:id="@+id/rb5Days"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="5 Days"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:buttonTint="#FF9800" />
+
+        <RadioButton
+            android:id="@+id/rb6Days"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="6 Days or more"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:buttonTint="#FF9800" />
+    </RadioGroup>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        app:cardBackgroundColor="#1E1E1E"
+        android:layout_marginTop="24dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="How long do you want each workout session to be?"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:padding="20dp"
+            android:textAlignment="center" />
+    </androidx.cardview.widget.CardView>
+
+    <RadioGroup
+        android:id="@+id/rgWorkoutTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/rb15Min"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="15 - 20 Minutes"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:buttonTint="#FF9800" />
+
+        <RadioButton
+            android:id="@+id/rb30Min"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="30 - 40 Minutes"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:buttonTint="#FF9800" />
+
+        <RadioButton
+            android:id="@+id/rb45Min"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="45 - 60 Minutes"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:buttonTint="#FF9800" />
+
+        <RadioButton
+            android:id="@+id/rb60MinPlus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Over 60 Minutes"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:buttonTint="#FF9800" />
+    </RadioGroup>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnNextSchedule"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Next"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:backgroundTint="#FF9800"
+        app:cornerRadius="30dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="8dp" />
+
+</LinearLayout>
+

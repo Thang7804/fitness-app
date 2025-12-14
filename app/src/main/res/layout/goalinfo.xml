@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#000000">
+    <TextView
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:text="← Back"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:padding="8dp"
+        android:clickable="true"
+        android:focusable="true"/>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        app:cardBackgroundColor="#1E1E1E"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="What is your fitness goal?"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:padding="20dp"
+            android:textAlignment="center" />
+    </androidx.cardview.widget.CardView>
+
+    <RadioGroup
+        android:id="@+id/rgFitnessGoal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/rbLoseWeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lose Weight"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:buttonTint="#FF9800" />
+
+        <RadioButton
+            android:id="@+id/rbGainMuscle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gain Muscle"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:buttonTint="#FF9800" />
+
+        <RadioButton
+            android:id="@+id/rbMaintainFitness"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Maintain Fitness"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:buttonTint="#FF9800" />
+
+        <RadioButton
+            android:id="@+id/rbIncreaseStamina"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Increase Stamina"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:buttonTint="#FF9800" />
+    </RadioGroup>
+
+    <!-- Câu hỏi 2: Target Weight -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:cardCornerRadius="12dp"
+        app:cardBackgroundColor="#1E1E1E">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="What is your target weight?"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:padding="20dp"
+            android:textAlignment="center" />
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="8dp">
+
+        <EditText
+            android:id="@+id/edtTargetWeight"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:backgroundTint="#FF9800"
+            android:hint="Enter weight"
+            android:inputType="numberDecimal"
+            android:padding="12dp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#AAAAAA" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="kg"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:layout_marginStart="12dp" />
+    </LinearLayout>
+
+    <!-- Khoảng đệm đẩy nút xuống cuối -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Nút Next -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnNextGoal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Next"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:backgroundTint="#FF9800"
+        app:cornerRadius="30dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="8dp" />
+
+</LinearLayout>

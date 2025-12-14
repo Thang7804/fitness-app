@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AIFitness"
+        tools:replace="android:allowBackup,android:fullBackupContent,android:dataExtractionRules,android:theme,android:label">
+        <activity
+            android:name="com.app.aifitness.workout.CameraWorkoutActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.app.aifitness.workout.SummaryActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".Activity.RestDayActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.ExerciseDetail"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.DayDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.WorkoutHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.StatisticsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.FeedbackActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.BuildActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Question.EquipHeatlth"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Question.SheduleInfo"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Question.GoalInfor"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Question.FocusLevel"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Question.BasicInfo"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.SignUpActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Activity.SignInActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

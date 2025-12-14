@@ -1,0 +1,884 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#000000">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+        <!-- Header Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="20dp"
+            app:cardBackgroundColor="#1E1E1E"
+            app:cardElevation="8dp"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="👤"
+                    android:textSize="48sp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Profile"
+                    android:textColor="#FFFFFF"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:gravity="center" />
+
+                <TextView
+                    android:id="@+id/tvEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="user@example.com"
+                    android:textColor="#AAAAAA"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:layout_marginTop="4dp" />
+
+                <!-- Edit Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Edit Profile"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    app:backgroundTint="#FF9800"
+                    app:cornerRadius="20dp"
+                    android:layout_marginTop="16dp"
+                    android:paddingHorizontal="24dp"
+                    android:paddingVertical="8dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Personal Information Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardBackgroundColor="#1E1E1E"
+            app:cardElevation="6dp"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Personal Information"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- Height - View Mode -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="12dp"
+                    android:id="@+id/llHeightView">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Height:"
+                        android:textColor="#AAAAAA"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/tvHeight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-- cm"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Height - Edit Mode -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilHeight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Height (cm)"
+                    app:hintTextColor="#AAAAAA"
+                    app:boxStrokeColor="#FF9800"
+                    android:layout_marginBottom="12dp"
+                    android:visibility="gone">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtHeight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FFFFFF"
+                        android:inputType="numberDecimal" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Weight - View Mode -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="12dp"
+                    android:id="@+id/llWeightView">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Weight:"
+                        android:textColor="#AAAAAA"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/tvWeight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-- kg"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Weight - Edit Mode -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilWeight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Weight (kg)"
+                    app:hintTextColor="#AAAAAA"
+                    app:boxStrokeColor="#FF9800"
+                    android:layout_marginBottom="12dp"
+                    android:visibility="gone">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtWeight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FFFFFF"
+                        android:inputType="numberDecimal" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Goal Weight - View Mode -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="12dp"
+                    android:id="@+id/llGoalWeightView">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Goal Weight:"
+                        android:textColor="#AAAAAA"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/tvGoalWeight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-- kg"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Goal Weight - Edit Mode -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilGoalWeight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Goal Weight (kg)"
+                    app:hintTextColor="#AAAAAA"
+                    app:boxStrokeColor="#FF9800"
+                    android:layout_marginBottom="12dp"
+                    android:visibility="gone">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtGoalWeight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FFFFFF"
+                        android:inputType="numberDecimal" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- DOB - View Mode -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="12dp"
+                    android:id="@+id/llDOBView">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Date of Birth:"
+                        android:textColor="#AAAAAA"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/tvDOB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="--"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- DOB - Edit Mode -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilDOB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Date of Birth (dd/MM/yyyy)"
+                    app:hintTextColor="#AAAAAA"
+                    app:boxStrokeColor="#FF9800"
+                    android:layout_marginBottom="12dp"
+                    android:visibility="gone">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtDOB"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FFFFFF" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Gender - View Mode -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="12dp"
+                    android:id="@+id/llGenderView">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Gender:"
+                        android:textColor="#AAAAAA"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/tvGender"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="--"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Gender - Edit Mode -->
+                <LinearLayout
+                    android:id="@+id/llGenderEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Gender"
+                        android:textColor="#AAAAAA"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="8dp" />
+
+                    <RadioGroup
+                        android:id="@+id/rgGender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rbMale"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Male"
+                            android:textColor="#FFFFFF"
+                            android:buttonTint="#FF9800" />
+
+                        <RadioButton
+                            android:id="@+id/rbFemale"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Female"
+                            android:textColor="#FFFFFF"
+                            android:buttonTint="#FF9800" />
+                    </RadioGroup>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Fitness Goals Card (Editable) -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardBackgroundColor="#1E1E1E"
+            app:cardElevation="6dp"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fitness Goals"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- Fitness Goals - View Mode -->
+                <LinearLayout
+                    android:id="@+id/llFitnessGoalsView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="12dp">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Goal:"
+                            android:textColor="#AAAAAA"
+                            android:textSize="14sp" />
+                        <TextView
+                            android:id="@+id/tvGoal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="--"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="12dp">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Experience:"
+                            android:textColor="#AAAAAA"
+                            android:textSize="14sp" />
+                        <TextView
+                            android:id="@+id/tvExperience"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="--"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="12dp">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Focus Area:"
+                            android:textColor="#AAAAAA"
+                            android:textSize="14sp" />
+                        <TextView
+                            android:id="@+id/tvFocusArea"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="--"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="12dp">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Health Issues:"
+                            android:textColor="#AAAAAA"
+                            android:textSize="14sp" />
+                        <TextView
+                            android:id="@+id/tvHealthIssue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="--"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="12dp">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Available Time:"
+                            android:textColor="#AAAAAA"
+                            android:textSize="14sp" />
+                        <TextView
+                            android:id="@+id/tvAvailableTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="--"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Days per Week:"
+                            android:textColor="#AAAAAA"
+                            android:textSize="14sp" />
+                        <TextView
+                            android:id="@+id/tvDayPerWeek"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="--"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Fitness Goals - Edit Mode -->
+                <LinearLayout
+                    android:id="@+id/llFitnessGoalsEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                <!-- Goal -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Goal"
+                    android:textColor="#AAAAAA"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="8dp" />
+
+                <RadioGroup
+                    android:id="@+id/rgGoal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <RadioButton
+                        android:id="@+id/rbLoseWeight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Lose Weight"
+                        android:textColor="#FFFFFF"
+                        android:buttonTint="#FF9800"
+                        android:paddingVertical="4dp" />
+
+                    <RadioButton
+                        android:id="@+id/rbGainMuscle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Gain Muscle"
+                        android:textColor="#FFFFFF"
+                        android:buttonTint="#FF9800"
+                        android:paddingVertical="4dp" />
+
+                    <RadioButton
+                        android:id="@+id/rbMaintainFitness"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Maintain Fitness"
+                        android:textColor="#FFFFFF"
+                        android:buttonTint="#FF9800"
+                        android:paddingVertical="4dp" />
+
+                    <RadioButton
+                        android:id="@+id/rbIncreaseStamina"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Increase Stamina"
+                        android:textColor="#FFFFFF"
+                        android:buttonTint="#FF9800"
+                        android:paddingVertical="4dp" />
+                </RadioGroup>
+
+                <!-- Experience -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Experience Level"
+                    android:textColor="#AAAAAA"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="8dp" />
+
+                <RadioGroup
+                    android:id="@+id/rgExperience"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <RadioButton
+                        android:id="@+id/rbBeginner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Beginner"
+                        android:textColor="#FFFFFF"
+                        android:buttonTint="#FF9800"
+                        android:paddingVertical="4dp" />
+
+                    <RadioButton
+                        android:id="@+id/rbIntermediate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Intermediate"
+                        android:textColor="#FFFFFF"
+                        android:buttonTint="#FF9800"
+                        android:paddingVertical="4dp" />
+
+                    <RadioButton
+                        android:id="@+id/rbAdvanced"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Advanced"
+                        android:textColor="#FFFFFF"
+                        android:buttonTint="#FF9800"
+                        android:paddingVertical="4dp" />
+                </RadioGroup>
+
+                <!-- Focus Area -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Focus Area"
+                    android:textColor="#AAAAAA"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="8dp" />
+
+                <RadioGroup
+                    android:id="@+id/rgFocusArea"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <RadioButton
+                        android:id="@+id/rbFullBody"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Full Body"
+                        android:textColor="#FFFFFF"
+                        android:buttonTint="#FF9800"
+                        android:paddingVertical="4dp" />
+
+                    <RadioButton
+                        android:id="@+id/rbUpperBody"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Upper Body"
+                        android:textColor="#FFFFFF"
+                        android:buttonTint="#FF9800"
+                        android:paddingVertical="4dp" />
+
+                    <RadioButton
+                        android:id="@+id/rbLowerBody"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Lower Body"
+                        android:textColor="#FFFFFF"
+                        android:buttonTint="#FF9800"
+                        android:paddingVertical="4dp" />
+
+                    <RadioButton
+                        android:id="@+id/rbCore"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Core/Abs"
+                        android:textColor="#FFFFFF"
+                        android:buttonTint="#FF9800"
+                        android:paddingVertical="4dp" />
+                </RadioGroup>
+
+                <!-- Health Issues -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Health Issues"
+                    android:textColor="#AAAAAA"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="8dp" />
+
+                <RadioGroup
+                    android:id="@+id/rgHealthIssue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <RadioButton
+                        android:id="@+id/rbNoIssues"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="No Issues"
+                        android:textColor="#FFFFFF"
+                        android:buttonTint="#FF9800"
+                        android:paddingVertical="4dp" />
+
+                    <RadioButton
+                        android:id="@+id/rbJointPain"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Joint, Knee Pain"
+                        android:textColor="#FFFFFF"
+                        android:buttonTint="#FF9800"
+                        android:paddingVertical="4dp" />
+
+                    <RadioButton
+                        android:id="@+id/rbBackPain"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Back Pain"
+                        android:textColor="#FFFFFF"
+                        android:buttonTint="#FF9800"
+                        android:paddingVertical="4dp" />
+
+                    <RadioButton
+                        android:id="@+id/rbCardioIssues"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Heart or Cardio Issues"
+                        android:textColor="#FFFFFF"
+                        android:buttonTint="#FF9800"
+                        android:paddingVertical="4dp" />
+                </RadioGroup>
+
+                <!-- Available Time -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Available Time per Session"
+                    android:textColor="#AAAAAA"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="8dp" />
+
+                <RadioGroup
+                    android:id="@+id/rgAvailableTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <RadioButton
+                        android:id="@+id/rb15Min"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="15 minutes"
+                        android:textColor="#FFFFFF"
+                        android:buttonTint="#FF9800"
+                        android:paddingVertical="4dp" />
+
+                    <RadioButton
+                        android:id="@+id/rb30Min"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="30 minutes"
+                        android:textColor="#FFFFFF"
+                        android:buttonTint="#FF9800"
+                        android:paddingVertical="4dp" />
+
+                    <RadioButton
+                        android:id="@+id/rb45Min"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="45 minutes"
+                        android:textColor="#FFFFFF"
+                        android:buttonTint="#FF9800"
+                        android:paddingVertical="4dp" />
+
+                    <RadioButton
+                        android:id="@+id/rb60MinPlus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="60+ minutes"
+                        android:textColor="#FFFFFF"
+                        android:buttonTint="#FF9800"
+                        android:paddingVertical="4dp" />
+                </RadioGroup>
+
+                <!-- Days per week -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Training Days per Week"
+                    android:textColor="#AAAAAA"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="8dp" />
+
+                <RadioGroup
+                    android:id="@+id/rgDayPerWeek"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/rb2Days"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="2 days"
+                        android:textColor="#FFFFFF"
+                        android:buttonTint="#FF9800"
+                        android:paddingVertical="4dp" />
+
+                    <RadioButton
+                        android:id="@+id/rb3Days"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="3 days"
+                        android:textColor="#FFFFFF"
+                        android:buttonTint="#FF9800"
+                        android:paddingVertical="4dp" />
+
+                    <RadioButton
+                        android:id="@+id/rb4Days"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="4 days"
+                        android:textColor="#FFFFFF"
+                        android:buttonTint="#FF9800"
+                        android:paddingVertical="4dp" />
+
+                    <RadioButton
+                        android:id="@+id/rb5Days"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="5 days"
+                        android:textColor="#FFFFFF"
+                        android:buttonTint="#FF9800"
+                        android:paddingVertical="4dp" />
+
+                    <RadioButton
+                        android:id="@+id/rb6Days"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="6 days"
+                        android:textColor="#FFFFFF"
+                        android:buttonTint="#FF9800"
+                        android:paddingVertical="4dp" />
+                </RadioGroup>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Save Button (only visible in edit mode) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Save Changes"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            app:backgroundTint="#FF9800"
+            app:cornerRadius="30dp"
+            android:layout_marginBottom="12dp"
+            android:visibility="gone" />
+
+        <!-- Logout Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Logout"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            app:backgroundTint="#F44336"
+            app:cornerRadius="30dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Progress Bar -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateTint="#FF9800"
+            android:visibility="gone" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom Navigation -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:menu="@menu/bottom_navigation"
+        app:itemIconTint="@color/bottom_nav_selector"
+        app:itemTextColor="@color/bottom_nav_selector"
+        app:backgroundTint="#1E1E1E"
+        app:elevation="8dp" />
+
+</LinearLayout>
+
