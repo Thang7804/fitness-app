@@ -20,6 +20,7 @@ public class User implements Serializable {
     public Integer level;
     public Integer currentDay;
     public Integer dayPerWeek;
+    public Integer totalWorkoutDays; // Tổng số ngày workout trong schedule (tính dựa trên dayPerWeek)
     public String healthIssue;
     public Map<String, Map<String, Object>> schedule;
     public User(){}
@@ -38,12 +39,13 @@ public class User implements Serializable {
         this.goalWeight =null;
         this.level=null;
         this.dayPerWeek=null;
+        this.totalWorkoutDays=null;
         this.healthIssue=null;
         this.schedule = new HashMap<>();
         this.currentDay=null;
     }
 
-    public User(String email, String goal, Integer availableTime, String experience, Boolean hasEquipment, String focusArea, boolean isNew, String dob, String gender, Float height, Float weight, Float goalWeight, Integer level, Integer currentDay, Integer dayPerWeek, String healthIssue, Map<String, Map<String, Object>> schedule) {
+    public User(String email, String goal, Integer availableTime, String experience, Boolean hasEquipment, String focusArea, boolean isNew, String dob, String gender, Float height, Float weight, Float goalWeight, Integer level, Integer currentDay, Integer dayPerWeek, Integer totalWorkoutDays, String healthIssue, Map<String, Map<String, Object>> schedule) {
         this.email = email;
         this.goal = goal;
         this.availableTime = availableTime;
@@ -59,6 +61,7 @@ public class User implements Serializable {
         this.level = level;
         this.currentDay = currentDay;
         this.dayPerWeek = dayPerWeek;
+        this.totalWorkoutDays = totalWorkoutDays;
         this.healthIssue = healthIssue;
         this.schedule = schedule;
     }

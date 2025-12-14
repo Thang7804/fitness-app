@@ -27,7 +27,8 @@
             android:exported="false" />
         <activity
             android:name=".Activity.ExerciseDetail"
-            android:exported="false" />
+            android:exported="false"
+            android:hardwareAccelerated="true" />
         <activity
             android:name=".Activity.DayDetailActivity"
             android:exported="false" />

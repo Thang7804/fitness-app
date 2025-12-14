@@ -136,13 +136,21 @@ public class ScheduleUpdateLogic {
 
         int currentDay = user.currentDay != null ? user.currentDay : 0;
 
+        // Tính totalWorkoutDays nếu chưa có
+        if (user.totalWorkoutDays == null || user.totalWorkoutDays <= 0) {
+            user.totalWorkoutDays = ScheduleBuild.calculateTotalWorkoutDays(user);
+        }
+        
+        // Tính số ngày cần gen: totalWorkoutDays + rest days
+        int totalDaysToGenerate = Math.max(30, user.totalWorkoutDays + (user.totalWorkoutDays / 3));
+
         if (resetToDay1) {
             // Reset về ngày 1: xóa toàn bộ schedule và rebuild
             user.schedule = new HashMap<>();
             user.currentDay = 0;
             
-            // Build 30 ngày mới
-            for (int i = 0; i < 30; i++) {
+            // Build schedule dựa trên totalWorkoutDays
+            for (int i = 0; i < totalDaysToGenerate; i++) {
                 scheduler.buildNextDay(user, recommended);
             }
         } else {
@@ -161,8 +169,8 @@ public class ScheduleUpdateLogic {
                 }
             }
 
-            // Rebuild các ngày còn lại
-            int daysToRebuild = 30 - currentDay;
+            // Rebuild các ngày còn lại dựa trên totalWorkoutDays
+            int daysToRebuild = totalDaysToGenerate - currentDay;
             for (int i = 0; i < daysToRebuild; i++) {
                 scheduler.buildNextDay(user, recommended);
             }

@@ -50,7 +50,20 @@ public class BuildActivity extends AppCompatActivity {
                         allExercises.addAll(exercises);
                         List<Exercise> recommended = rules.filterRecommended(user, allExercises);
                         if (user.currentDay == null) user.currentDay = 0;
-                        for(int i=0; i<30; i++){
+                        
+                        // Tính totalWorkoutDays nếu chưa có
+                        if (user.totalWorkoutDays == null || user.totalWorkoutDays <= 0) {
+                            user.totalWorkoutDays = ScheduleBuild.calculateTotalWorkoutDays(user);
+                        }
+                        
+                        // Tính số ngày cần gen: totalWorkoutDays + rest days
+                        // Logic: mỗi 4 ngày có 1 rest day, vậy số rest day ≈ totalWorkoutDays / 3
+                        // Tổng số ngày = totalWorkoutDays + rest days, nhưng đảm bảo tối thiểu 30 ngày
+                        int totalDaysToGenerate = Math.max(30, user.totalWorkoutDays + (user.totalWorkoutDays / 3));
+                        
+                        Log.d("BuildActivity", "Generating schedule: totalWorkoutDays=" + user.totalWorkoutDays + ", totalDays=" + totalDaysToGenerate);
+                        
+                        for(int i=0; i<totalDaysToGenerate; i++){
                             scheduler.buildNextDay(user, recommended);
                         }
                         firebaseHelper.updateUser(user, new Callback() {

@@ -42,6 +42,10 @@ import com.google.mediapipe.tasks.vision.poselandmarker.PoseLandmarkerResult;
 import com.app.aifitness.workout.WorkoutSessionResult;
 
 import java.nio.ByteBuffer;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -76,6 +80,7 @@ public class CameraWorkoutActivity extends AppCompatActivity {
 
     // Info session
     private String exerciseDisplayName = "Workout";
+    private String exerciseId; // Exercise ID từ schedule
     private int latestScore = 0;
     private int latestReps = 0;
     private long latestHoldMillis = 0L;
@@ -108,6 +113,7 @@ public class CameraWorkoutActivity extends AppCompatActivity {
 
         // ==== GET INTENT DATA ====
         exerciseDisplayName = getIntent().getStringExtra("exercise_display_name");
+        exerciseId = getIntent().getStringExtra("exercise_id"); // Exercise ID từ schedule
         String modeStr = getIntent().getStringExtra("exercise_mode");
         String typeStr = getIntent().getStringExtra("exercise_type");
         String strictStr = getIntent().getStringExtra("strictness");
@@ -354,7 +360,7 @@ public class CameraWorkoutActivity extends AppCompatActivity {
     }
 
     /**
-     * Khi đủ target -> dừng camera -> quay về DayDetailActivity.
+     * Khi đủ target -> dừng camera -> quay về DayDetailActivity hoặc FeedbackActivity.
      * @param completed true nếu đủ target, false nếu user bấm close.
      */
     private void openDayDetailAndFinish(boolean completed) {
@@ -367,20 +373,125 @@ public class CameraWorkoutActivity extends AppCompatActivity {
         }
 
         if (completed) {
-            // Chuyển đến FeedbackActivity thay vì DayDetailActivity
-            Intent intent = new Intent(CameraWorkoutActivity.this, com.app.aifitness.Activity.FeedbackActivity.class);
-            intent.putExtra("exercise_name", exerciseDisplayName);
-            intent.putExtra("exercise_type", exerciseType.name());
-            intent.putExtra("workout_session_id", savedWorkoutSessionId);
-            intent.putExtra("dayName", dayName);
-            startActivity(intent);
+            // Kiểm tra xem tất cả bài tập trong ngày đã hoàn thành chưa
+            checkAllExercisesCompletedAndNavigate();
         } else {
             // Nếu không hoàn thành, quay về DayDetailActivity
             Intent intent = new Intent(CameraWorkoutActivity.this, DayDetailActivity.class);
             intent.putExtra("dayName", dayName);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
+            finish();
         }
+    }
+    
+    /**
+     * Kiểm tra xem tất cả bài tập trong ngày đã hoàn thành chưa
+     * Nếu đã hoàn thành tất cả -> chuyển đến FeedbackActivity để đánh giá
+     * Nếu chưa -> quay về DayDetailActivity
+     */
+    private void checkAllExercisesCompletedAndNavigate() {
+        if (dayName == null || dayName.isEmpty()) {
+            // Không có dayName, quay về DayDetailActivity
+            Intent intent = new Intent(CameraWorkoutActivity.this, DayDetailActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+        
+        // Lấy schedule để biết có bao nhiêu bài tập trong ngày
+        FirebaseHelper.getInstance().getCurrentUser(
+            FirebaseHelper.getInstance().getCurrentUserId(),
+            new com.app.aifitness.Firebase.DataCallBack<com.app.aifitness.Model.User>() {
+                @Override
+                public void onSuccess(com.app.aifitness.Model.User user) {
+                    if (user == null || user.schedule == null) {
+                        // Không có schedule, quay về DayDetailActivity
+                        navigateToDayDetail();
+                        return;
+                    }
+                    
+                    Map<String, Object> dayMap = user.schedule.get(dayName);
+                    if (dayMap == null) {
+                        navigateToDayDetail();
+                        return;
+                    }
+                    
+                    // Đếm số bài tập trong ngày (không tính rest)
+                    Set<String> exerciseIds = new HashSet<>();
+                    for (Map.Entry<String, Object> entry : dayMap.entrySet()) {
+                        String key = entry.getKey();
+                        if (!key.equals("rest") && entry.getValue() instanceof Map) {
+                            exerciseIds.add(key);
+                        }
+                    }
+                    
+                    // Nếu là rest day hoặc không có bài tập, quay về DayDetailActivity
+                    if (exerciseIds.isEmpty()) {
+                        navigateToDayDetail();
+                        return;
+                    }
+                    
+                    // Lấy workout history để check bài tập nào đã hoàn thành
+                    FirebaseHelper.getInstance().getWorkoutHistory(
+                        new com.app.aifitness.Firebase.DataCallBack<List<WorkoutSessionResult>>() {
+                            @Override
+                            public void onSuccess(List<WorkoutSessionResult> history) {
+                                if (history == null) {
+                                    navigateToDayDetail();
+                                    return;
+                                }
+                                
+                                // Đếm số bài tập đã hoàn thành (completed=true)
+                                Set<String> completedExerciseIds = new HashSet<>();
+                                for (WorkoutSessionResult session : history) {
+                                    if (session.isCompleted() && 
+                                        dayName.equals(session.getDayName()) &&
+                                        session.getExerciseId() != null &&
+                                        exerciseIds.contains(session.getExerciseId())) {
+                                        completedExerciseIds.add(session.getExerciseId());
+                                    }
+                                }
+                                
+                                // Chỉ chuyển đến FeedbackActivity khi TẤT CẢ bài tập đã hoàn thành
+                                if (completedExerciseIds.size() >= exerciseIds.size()) {
+                                    // Tất cả bài tập đã hoàn thành -> cho đánh giá
+                                    Intent intent = new Intent(CameraWorkoutActivity.this, com.app.aifitness.Activity.FeedbackActivity.class);
+                                    intent.putExtra("exercise_name", exerciseDisplayName);
+                                    intent.putExtra("exercise_type", exerciseType.name());
+                                    intent.putExtra("workout_session_id", savedWorkoutSessionId);
+                                    intent.putExtra("dayName", dayName);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    // Chưa hoàn thành tất cả -> quay về DayDetailActivity
+                                    navigateToDayDetail();
+                                }
+                            }
+                            
+                            @Override
+                            public void onError(String errorMessage) {
+                                // Lỗi khi load history -> quay về DayDetailActivity
+                                navigateToDayDetail();
+                            }
+                        });
+                }
+                
+                @Override
+                public void onError(String errorMessage) {
+                    // Lỗi khi load user -> quay về DayDetailActivity
+                    navigateToDayDetail();
+                }
+            });
+    }
+    
+    private void navigateToDayDetail() {
+        Intent intent = new Intent(CameraWorkoutActivity.this, DayDetailActivity.class);
+        if (dayName != null) {
+        intent.putExtra("dayName", dayName);
+        }
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
         finish();
     }
 
@@ -390,15 +501,26 @@ public class CameraWorkoutActivity extends AppCompatActivity {
     private void saveWorkoutSession() {
         long endTime = System.currentTimeMillis();
         
+        // Xác định completed dựa trên AI detect: đạt target reps hoặc hold time
+        boolean completed = false;
+        if (!isHoldExercise) {
+            completed = (targetReps > 0 && latestReps >= targetReps);
+        } else {
+            completed = (targetHoldSeconds > 0 && latestHoldMillis >= targetHoldSeconds * 1000L);
+        }
+        
         WorkoutSessionResult session = new WorkoutSessionResult(
                 null, // id sẽ được set bởi Firebase
                 exerciseDisplayName,
                 exerciseType.name(),
+                exerciseId != null ? exerciseId : "", // Exercise ID từ schedule
                 isHoldExercise,
                 strictness.name(),
+                dayName != null ? dayName : "", // Day name
                 latestReps,
                 latestHoldMillis,
                 latestScore,
+                completed, // true nếu đã hoàn thành target (dựa trên AI detect)
                 sessionStartTime,
                 endTime
         );

@@ -69,6 +69,9 @@ dependencies {
     // ===== RecyclerView (already included in material but explicit) =====
     implementation("androidx.recyclerview:recyclerview:1.3.2")
 
+    // ===== YouTube Player =====
+    implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
+
     // Tests
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

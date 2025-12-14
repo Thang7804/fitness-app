@@ -45,6 +45,14 @@ public class MainActivity extends AppCompatActivity {
         loadDashboardStats();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Reload schedule khi quay lại để cập nhật highlight và autoscroll
+        loadScheduleDays();
+        loadDashboardStats();
+    }
+
     private void setupBottomNavigation() {
         bottomNavigation.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
@@ -74,8 +82,16 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                ScheduleAdapter adapter = new ScheduleAdapter(MainActivity.this, user.schedule);
+                // Đảm bảo currentDay không null
+                Integer currentDay = user.currentDay != null ? user.currentDay : 0;
+                
+                ScheduleAdapter adapter = new ScheduleAdapter(MainActivity.this, user.schedule, currentDay);
                 rvScheduleDays.setAdapter(adapter);
+
+                // Auto scroll to current day (currentDay + 1) - delay để đảm bảo RecyclerView đã render
+                rvScheduleDays.postDelayed(() -> {
+                    scrollToCurrentDay(currentDay);
+                }, 300);
             }
 
             @Override
@@ -83,6 +99,37 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void scrollToCurrentDay(Integer currentDay) {
+        if (currentDay == null) {
+            currentDay = 0;
+        }
+        
+        // Ngày hiện tại = currentDay + 1 (vì currentDay là ngày đã hoàn thành)
+        int todayDay = currentDay + 1;
+        String dayKey = "day" + todayDay;
+        
+        ScheduleAdapter adapter = (ScheduleAdapter) rvScheduleDays.getAdapter();
+        if (adapter == null) {
+            return;
+        }
+        
+        // Kiểm tra xem day có tồn tại không
+        if (!adapter.hasDay(dayKey)) {
+            // Nếu không tìm thấy, thử tìm ngày gần nhất
+            return;
+        }
+        
+        int position = adapter.getPositionForDay(dayKey);
+        
+        if (position >= 0 && position < adapter.getItemCount()) {
+            LinearLayoutManager layoutManager = (LinearLayoutManager) rvScheduleDays.getLayoutManager();
+            if (layoutManager != null) {
+                // Scroll tới position với offset để ngày hiện tại không bị che bởi header
+                layoutManager.scrollToPositionWithOffset(position, 200); // 200dp offset
+            }
+        }
     }
 
     private void loadDashboardStats() {

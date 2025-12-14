@@ -90,6 +90,7 @@ public class FirebaseHelper {
         if (user.level != null ) updates.put("level", user.level);
         if (user.currentDay != null ) updates.put("currentDay", user.currentDay);
         if (user.dayPerWeek != null ) updates.put("dayPerWeek", user.dayPerWeek);
+        if (user.totalWorkoutDays != null ) updates.put("totalWorkoutDays", user.totalWorkoutDays);
         if (user.healthIssue != null && !user.healthIssue.isEmpty()) updates.put("healthIssue", user.healthIssue);
         if (user.schedule != null && !user.schedule.isEmpty()) updates.put("schedule", user.schedule);
 
@@ -415,6 +416,47 @@ public class FirebaseHelper {
                         callback.onError(errorMessage);
                     }
                 });
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                callback.onError(errorMessage);
+            }
+        });
+    }
+
+    /**
+     * Cập nhật currentDay nếu dayNumber > currentDay
+     * currentDay track ngày hiện tại mà user đang ở (ngày đã hoàn thành)
+     * 
+     * @param dayNumber Số ngày đã hoàn thành (ví dụ: 1, 2, 3...)
+     * @param callback Callback để thông báo kết quả
+     */
+    public void updateCurrentDayIfNeeded(int dayNumber, Callback callback) {
+        String uid = getCurrentUserId();
+        if (uid == null) {
+            callback.onError("User has not logged in");
+            return;
+        }
+
+        getCurrentUser(uid, new DataCallBack<User>() {
+            @Override
+            public void onSuccess(User user) {
+                if (user == null) {
+                    callback.onError("User not found");
+                    return;
+                }
+
+                int currentDay = user.currentDay != null ? user.currentDay : 0;
+                
+                // Chỉ cập nhật nếu dayNumber > currentDay
+                if (dayNumber > currentDay) {
+                    user.currentDay = dayNumber;
+                    updateUser(user, callback);
+                } else {
+                    // Không cần cập nhật
+                    callback.onSuccess();
+                }
             }
 
             @Override

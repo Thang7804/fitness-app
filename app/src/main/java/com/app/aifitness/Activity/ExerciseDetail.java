@@ -73,6 +73,7 @@ public class ExerciseDetail extends AppCompatActivity {
         });
 
         setupWebView();
+
         loadExerciseDetails();
     }
 
@@ -216,5 +217,13 @@ public class ExerciseDetail extends AppCompatActivity {
         Pattern compiledPattern = Pattern.compile(pattern);
         Matcher matcher = compiledPattern.matcher(url);
         return matcher.find() ? matcher.group() : "";
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (webViewYoutube != null) {
+            webViewYoutube.destroy();
+        }
     }
 }

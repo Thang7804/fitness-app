@@ -26,10 +26,14 @@ public class SignInActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_in);
+        
         edtemail = findViewById(R.id.Email);
         edtpassword= findViewById(R.id.Password);
         btnSignIn = findViewById(R.id.btnSignIn);
         btnSignUp= findViewById(R.id.btnSignUp);
+        
+        // Kiểm tra xem user đã đăng nhập chưa (auto login)
+        checkAutoLogin();
         btnSignIn.setOnClickListener(v-> {
                     String email = edtemail.getText().toString().trim();
                     String password = edtpassword.getText().toString().trim();
@@ -70,5 +74,42 @@ public class SignInActivity extends AppCompatActivity {
             Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
             startActivity(intent);
         });
+    }
+    
+    /**
+     * Kiểm tra xem user đã đăng nhập chưa và tự động đăng nhập nếu có
+     */
+    private void checkAutoLogin() {
+        String userId = FirebaseHelper.getInstance().getCurrentUserId();
+        if (userId != null) {
+            // User đã đăng nhập, lấy thông tin user và chuyển đến màn hình phù hợp
+            FirebaseHelper.getInstance().getCurrentUser(userId, new DataCallBack<User>() {
+                @Override
+                public void onSuccess(User user) {
+                    if (user != null) {
+                        if (user.isNew) {
+                            // User mới, chuyển đến BasicInfo để điền thông tin
+                            Intent intent = new Intent(SignInActivity.this, BasicInfo.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            // User đã có thông tin, chuyển đến MainActivity
+                            Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+                }
+
+                @Override
+                public void onError(String error) {
+                    // Nếu không lấy được user, có thể session đã hết hạn
+                    // Cho phép user đăng nhập lại
+                }
+            });
+        }
+        // Nếu userId == null, user chưa đăng nhập, hiển thị màn hình đăng nhập bình thường
     }
 }

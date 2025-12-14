@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.app.aifitness.Activity.BuildActivity;
+import com.app.aifitness.BuildExLogic.ScheduleBuild;
 import com.app.aifitness.Firebase.Callback;
 import com.app.aifitness.Firebase.FirebaseHelper;
 import com.app.aifitness.Model.User;
@@ -59,6 +60,10 @@ public class EquipHeatlth extends AppCompatActivity {
                 Toast.makeText(this, "Please select!", Toast.LENGTH_SHORT).show();
                 return;
             }
+            
+            // Tính totalWorkoutDays dựa trên dayPerWeek và availableTime
+            currentUser.totalWorkoutDays = ScheduleBuild.calculateTotalWorkoutDays(currentUser);
+            
             FirebaseHelper.getInstance().updateUser(currentUser, new Callback() {
                 @Override
                 public void onSuccess() {

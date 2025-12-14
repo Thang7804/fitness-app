@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.app.aifitness.BuildExLogic.ScheduleBuild;
 import com.app.aifitness.Firebase.Callback;
 import com.app.aifitness.Firebase.DataCallBack;
 import com.app.aifitness.Firebase.FirebaseHelper;
@@ -634,6 +635,9 @@ public class ProfileActivity extends AppCompatActivity {
         } else if (selectedDayId == R.id.rb6Days) {
             currentUser.dayPerWeek = 6;
         }
+
+        // Tính lại totalWorkoutDays dựa trên dayPerWeek và availableTime
+        currentUser.totalWorkoutDays = ScheduleBuild.calculateTotalWorkoutDays(currentUser);
 
         // Save to Firebase
         progressBar.setVisibility(View.VISIBLE);

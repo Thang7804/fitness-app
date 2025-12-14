@@ -12,12 +12,15 @@ public class WorkoutSessionResult {
     private String id;                   // Firestore document id (set sau khi load)
     private String exerciseName;         // Ví dụ: "Squat"
     private String exerciseType;         // Enum name: "SQUAT"
+    private String exerciseId;          // Exercise ID từ schedule (ví dụ: "squat_1")
     private boolean holdExercise;        // true = HOLD, false = REPS
     private String strictness;           // "EASY" / "NORMAL" / "HARD"
+    private String dayName;              // Day name (ví dụ: "day1")
 
     private int totalReps;               // cho REPS
     private long totalHoldMillis;        // cho HOLD (ms)
     private int avgScore;                // Điểm cuối (hoặc trung bình)
+    private boolean completed;           // true nếu đã hoàn thành target (dựa trên AI detect)
 
     private long startTime;              // timestamp ms (approx)
     private long endTime;                // timestamp ms
@@ -29,21 +32,27 @@ public class WorkoutSessionResult {
     public WorkoutSessionResult(String id,
                                 String exerciseName,
                                 String exerciseType,
+                                String exerciseId,
                                 boolean holdExercise,
                                 String strictness,
+                                String dayName,
                                 int totalReps,
                                 long totalHoldMillis,
                                 int avgScore,
+                                boolean completed,
                                 long startTime,
                                 long endTime) {
         this.id = id;
         this.exerciseName = exerciseName;
         this.exerciseType = exerciseType;
+        this.exerciseId = exerciseId;
         this.holdExercise = holdExercise;
         this.strictness = strictness;
+        this.dayName = dayName;
         this.totalReps = totalReps;
         this.totalHoldMillis = totalHoldMillis;
         this.avgScore = avgScore;
+        this.completed = completed;
         this.startTime = startTime;
         this.endTime = endTime;
     }
@@ -74,6 +83,14 @@ public class WorkoutSessionResult {
         this.exerciseType = exerciseType;
     }
 
+    public String getExerciseId() {
+        return exerciseId;
+    }
+
+    public void setExerciseId(String exerciseId) {
+        this.exerciseId = exerciseId;
+    }
+
     public boolean isHoldExercise() {
         return holdExercise;
     }
@@ -88,6 +105,14 @@ public class WorkoutSessionResult {
 
     public void setStrictness(String strictness) {
         this.strictness = strictness;
+    }
+
+    public String getDayName() {
+        return dayName;
+    }
+
+    public void setDayName(String dayName) {
+        this.dayName = dayName;
     }
 
     public int getTotalReps() {
@@ -112,6 +137,14 @@ public class WorkoutSessionResult {
 
     public void setAvgScore(int avgScore) {
         this.avgScore = avgScore;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 
     public long getStartTime() {
