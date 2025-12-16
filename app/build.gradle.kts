@@ -72,6 +72,7 @@ dependencies {
     // ===== ExoPlayer for local exercise videos =====
     implementation("com.google.android.exoplayer:exoplayer-core:2.19.1")
     implementation("com.google.android.exoplayer:exoplayer-ui:2.19.1")
+    implementation("com.google.android.exoplayer:exoplayer-datasource:2.19.1")
 
     // Tests
     testImplementation(libs.junit)
