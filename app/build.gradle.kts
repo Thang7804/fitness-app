@@ -69,8 +69,9 @@ dependencies {
     // ===== RecyclerView (already included in material but explicit) =====
     implementation("androidx.recyclerview:recyclerview:1.3.2")
 
-    // ===== YouTube Player =====
-    implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
+    // ===== ExoPlayer for local exercise videos =====
+    implementation("com.google.android.exoplayer:exoplayer-core:2.19.1")
+    implementation("com.google.android.exoplayer:exoplayer-ui:2.19.1")
 
     // Tests
     testImplementation(libs.junit)

@@ -1,10 +1,8 @@
 package com.app.aifitness.Activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,18 +13,21 @@ import com.app.aifitness.Firebase.FirebaseHelper;
 import com.app.aifitness.Model.Exercise;
 import com.app.aifitness.R;
 import com.app.aifitness.workout.CameraWorkoutActivity;
+import com.google.android.exoplayer2.ExoPlayer;
+import com.google.android.exoplayer2.MediaItem;
+import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.upstream.RawResourceDataSource;
 import com.google.android.material.button.MaterialButton;
 
 import java.io.Serializable;
 import java.util.Locale;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class ExerciseDetail extends AppCompatActivity {
 
     private TextView tvExerciseName, tvExerciseId, tvDescription, tvCameraAngle, tvCalories, tvDuration;
-    private WebView webViewYoutube;
+    private PlayerView playerView;
+    private ExoPlayer exoPlayer;
     private MaterialButton btnStartExercise;
     private TextView btnBack;
 
@@ -72,8 +73,6 @@ public class ExerciseDetail extends AppCompatActivity {
             finish();
         });
 
-        setupWebView();
-
         loadExerciseDetails();
     }
 
@@ -84,16 +83,36 @@ public class ExerciseDetail extends AppCompatActivity {
         tvCameraAngle = findViewById(R.id.tvCameraAngle);
         tvCalories = findViewById(R.id.tvCalories);
         tvDuration = findViewById(R.id.tvDuration);
-        webViewYoutube = findViewById(R.id.webViewYoutube);
+        playerView = findViewById(R.id.playerView);
         btnStartExercise = findViewById(R.id.btnStartExercise);
         btnBack = findViewById(R.id.btnBack);
     }
 
-    private void setupWebView() {
-        WebSettings settings = webViewYoutube.getSettings();
-        settings.setJavaScriptEnabled(true);
-        settings.setDomStorageEnabled(true);
-        webViewYoutube.setWebViewClient(new WebViewClient());
+    private void initPlayerIfNeeded() {
+        if (exoPlayer == null) {
+            exoPlayer = new ExoPlayer.Builder(this).build();
+            playerView.setPlayer(exoPlayer);
+        }
+    }
+
+    private void playLocalExerciseVideo(String exerciseId) {
+        if (exerciseId == null) return;
+
+        String rawName = exerciseId.toLowerCase(Locale.ROOT);
+        int resId = getResources().getIdentifier(rawName, "raw", getPackageName());
+        if (resId == 0) {
+            // Không tìm thấy video local, có thể show toast nhưng không crash
+            Toast.makeText(this, "Local video not found for: " + exerciseId, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        initPlayerIfNeeded();
+
+        Uri uri = RawResourceDataSource.buildRawResourceUri(resId);
+        MediaItem mediaItem = MediaItem.fromUri(uri);
+        exoPlayer.setMediaItem(mediaItem);
+        exoPlayer.setPlayWhenReady(false); // chỉ play khi user bấm
+        exoPlayer.prepare();
     }
 
     private void loadExerciseDetails() {
@@ -122,18 +141,8 @@ public class ExerciseDetail extends AppCompatActivity {
                         : "Reps: " + exerciseValue;
                 tvDuration.setText(targetText);
 
-                // Load video youtube
-                if (exercise.videoUrl != null && !exercise.videoUrl.isEmpty()) {
-                    String videoId = extractYoutubeId(exercise.videoUrl);
-                    if (!videoId.isEmpty()) {
-                        String html = "<html><body style='margin:0;padding:0;'>" +
-                                "<iframe width='100%' height='100%' " +
-                                "src='https://www.youtube.com/embed/" + videoId + "?autoplay=0&modestbranding=1&rel=0' " +
-                                "frameborder='0' allowfullscreen></iframe>" +
-                                "</body></html>";
-                        webViewYoutube.loadData(html, "text/html", "utf-8");
-                    }
-                }
+                // ====== PLAY LOCAL VIDEO WITH EXOPLAYER ======
+                playLocalExerciseVideo(exercise.id);
 
                 // ====== START CAMERA AI ======
                 btnStartExercise.setOnClickListener(v -> {
@@ -211,19 +220,20 @@ public class ExerciseDetail extends AppCompatActivity {
         return "PLANK".equalsIgnoreCase(exerciseTypeEnum);
     }
 
-    private String extractYoutubeId(String url) {
-        if (url == null || url.isEmpty()) return "";
-        String pattern = "(?<=v=|/videos/|embed/|youtu.be/)[^#&?]*";
-        Pattern compiledPattern = Pattern.compile(pattern);
-        Matcher matcher = compiledPattern.matcher(url);
-        return matcher.find() ? matcher.group() : "";
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (exoPlayer != null) {
+            exoPlayer.pause();
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (webViewYoutube != null) {
-            webViewYoutube.destroy();
+        if (exoPlayer != null) {
+            exoPlayer.release();
+            exoPlayer = null;
         }
     }
 }
