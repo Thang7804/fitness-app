@@ -57,6 +57,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingBottom="16dp">
+
             <TextView
                 android:id="@+id/tvExerciseName"
                 android:layout_width="match_parent"
@@ -165,6 +166,7 @@
                 android:text="- Back arching\n- Elbows moving too far forward"
                 android:textColor="#E0E0E0"
                 android:textSize="14sp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -182,6 +184,7 @@
                 android:textColor="#E0E0E0"
                 android:textSize="14sp"
                 android:layout_marginBottom="24dp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -190,6 +193,7 @@
                 android:textColor="#FF9800"
                 android:textSize="14sp"
                 android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/tvDuration"
                 android:layout_width="match_parent"
@@ -197,6 +201,50 @@
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:layout_marginTop="8dp"/>
+
+            <!-- ===== STRICTNESS SELECTOR (NEW) ===== -->
+            <TextView
+                android:id="@+id/tvStrictnessTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Strictness:"
+                android:textColor="#FF9800"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <RadioGroup
+                android:id="@+id/rgStrictness"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/rbEasy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="EASY"
+                    android:textColor="@color/white"
+                    android:layout_marginEnd="12dp"/>
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/rbNormal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="NORMAL"
+                    android:textColor="@color/white"
+                    android:layout_marginEnd="12dp"
+                    android:checked="true"/>
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/rbHard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="HARD"
+                    android:textColor="@color/white"/>
+            </RadioGroup>
+            <!-- ===== END STRICTNESS SELECTOR ===== -->
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnStartExercise"

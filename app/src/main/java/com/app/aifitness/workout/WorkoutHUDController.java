@@ -1,19 +1,14 @@
 package com.app.aifitness.workout;
 
-import android.graphics.Color;
-import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.app.aifitness.pose.PoseFeedback;
 
 /**
- * Quản lý HUD trong lúc tập:
- *  - Update text Reps / Time
- *  - Đổi màu Score theo ngưỡng:
- *      đỏ   <= 60
- *      vàng  60–80
- *      xanh  > 80
- *  - Hiển thị lỗi ngắn gọn (1 lỗi quan trọng nhất)
+ * HUD hiển thị "ổn định":
+ * - Reps/Time
+ * - Score: ưu tiên sessionScore (ổn định theo rep)
+ * - FormLabel + message ngắn gọn
  */
 public class WorkoutHUDController {
 
@@ -21,53 +16,54 @@ public class WorkoutHUDController {
     private final TextView tvRepsOrTime;
     private final TextView tvScore;
     private final TextView tvError;
+    private final boolean isHold;
 
-    private final boolean isHoldExercise;
-
-    public WorkoutHUDController(TextView tvExerciseName,
-                                TextView tvRepsOrTime,
-                                TextView tvScore,
-                                TextView tvError,
-                                boolean isHoldExercise) {
+    public WorkoutHUDController(
+            TextView tvExerciseName,
+            TextView tvRepsOrTime,
+            TextView tvScore,
+            TextView tvError,
+            boolean isHold
+    ) {
         this.tvExerciseName = tvExerciseName;
         this.tvRepsOrTime = tvRepsOrTime;
         this.tvScore = tvScore;
         this.tvError = tvError;
-        this.isHoldExercise = isHoldExercise;
+        this.isHold = isHold;
     }
 
-    public void update(PoseFeedback feedback) {
-        if (feedback == null) return;
+    public void update(PoseFeedback fb) {
+        if (fb == null) return;
 
-        // ===== Score + màu =====
-        int score = feedback.getScore();
-        tvScore.setText("Score: " + score);
-
-        int color;
-        if (score <= 60) {
-            color = Color.RED;
-        } else if (score <= 80) {
-            color = Color.YELLOW;
+        if (isHold) {
+            long sec = fb.getHoldMillis() / 1000L;
+            tvRepsOrTime.setText("Time: " + sec + " s");
         } else {
-            color = Color.GREEN;
-        }
-        tvScore.setTextColor(color);
-
-        // ===== Reps / Time =====
-        if (isHoldExercise) {
-            long seconds = feedback.getHoldMillis() / 1000L;
-            tvRepsOrTime.setText("Time: " + seconds + " s");
-        } else {
-            int reps = feedback.getReps();
-            tvRepsOrTime.setText("Reps: " + reps);
+            tvRepsOrTime.setText("Reps: " + fb.getReps());
         }
 
-        // ===== Error message ngắn gọn =====
-        String msg = feedback.getErrorMessage();
-        if (TextUtils.isEmpty(msg)) {
-            tvError.setText("Good form!");
+        // Score ổn định: sessionScore chỉ có sau khi hoàn thành >= 1 rep
+        int sessionScore = fb.getSessionScore();
+        int liveScore = fb.getLiveScore();
+
+        if (!fb.isScoringActive()) {
+            tvScore.setText("Score: --");
         } else {
-            tvError.setText(msg);
+            if (sessionScore > 0) tvScore.setText("Score: " + sessionScore);
+            else tvScore.setText("Score: " + liveScore); // chưa có rep nào thì tạm show live
+        }
+
+        String label = fb.getFormLabel();
+        String msg = fb.getMessage();
+
+        if (msg == null) msg = "";
+        if (label == null) label = "";
+
+        // Text error: ưu tiên dạng "LABEL - message"
+        if (!msg.isEmpty() && !"Good".equalsIgnoreCase(msg)) {
+            tvError.setText(label + " - " + msg);
+        } else {
+            tvError.setText(label);
         }
     }
 }

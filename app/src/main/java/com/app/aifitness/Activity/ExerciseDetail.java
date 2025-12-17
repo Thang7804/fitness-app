@@ -3,6 +3,7 @@ package com.app.aifitness.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,9 @@ public class ExerciseDetail extends AppCompatActivity {
     private ExoPlayer exoPlayer;
     private MaterialButton btnStartExercise;
     private TextView btnBack;
+
+    // NEW: strictness selector
+    private RadioGroup rgStrictness;
 
     // scheduleType từ Firestore (time/reps) -> KHÔNG dùng để quyết định mode nữa
     private String scheduleType;
@@ -86,6 +90,9 @@ public class ExerciseDetail extends AppCompatActivity {
         playerView = findViewById(R.id.playerView);
         btnStartExercise = findViewById(R.id.btnStartExercise);
         btnBack = findViewById(R.id.btnBack);
+
+        // NEW
+        rgStrictness = findViewById(R.id.rgStrictness);
     }
 
     private void initPlayerIfNeeded() {
@@ -101,7 +108,6 @@ public class ExerciseDetail extends AppCompatActivity {
         String rawName = exerciseId.toLowerCase(Locale.ROOT);
         int resId = getResources().getIdentifier(rawName, "raw", getPackageName());
         if (resId == 0) {
-            // Không tìm thấy video local, có thể show toast nhưng không crash
             Toast.makeText(this, "Local video not found for: " + exerciseId, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -111,7 +117,7 @@ public class ExerciseDetail extends AppCompatActivity {
         Uri uri = RawResourceDataSource.buildRawResourceUri(resId);
         MediaItem mediaItem = MediaItem.fromUri(uri);
         exoPlayer.setMediaItem(mediaItem);
-        exoPlayer.setPlayWhenReady(false); // chỉ play khi user bấm
+        exoPlayer.setPlayWhenReady(false);
         exoPlayer.prepare();
     }
 
@@ -151,8 +157,8 @@ public class ExerciseDetail extends AppCompatActivity {
                     intent.putExtra("exercise_display_name", exercise.name != null ? exercise.name : "Workout");
                     intent.putExtra("exercise_type", exerciseTypeEnum);
 
-                    // Bạn muốn bỏ Home/History -> strictness cứ fix cứng hoặc lấy theo UI sau này
-                    intent.putExtra("strictness", "NORMAL");
+                    // NEW: strictness theo lựa chọn user
+                    intent.putExtra("strictness", getSelectedStrictnessString());
 
                     if (dayName != null) intent.putExtra("dayName", dayName);
 
@@ -164,7 +170,6 @@ public class ExerciseDetail extends AppCompatActivity {
                         intent.putExtra("target_hold_seconds", Math.max(exerciseValue, 0));
                         intent.putExtra("target_reps", 0);
                     } else {
-                        // Squat đang bị "12 sec" ở firestore -> vẫn chạy 12 REPS theo ý bạn
                         intent.putExtra("target_reps", Math.max(exerciseValue, 0));
                         intent.putExtra("target_hold_seconds", 0);
                     }
@@ -184,13 +189,22 @@ public class ExerciseDetail extends AppCompatActivity {
         });
     }
 
-    // ================= HELPERS =================
+    // ================= STRICTNESS HELPERS =================
 
     /**
-     * Quyết định loại bài để AI xử lý (enum string).
-     * - Ưu tiên theo name (vì firestore scheduleType hay bị sai)
-     * - Fallback theo id nếu name null
+     * Trả về "EASY" / "NORMAL" / "HARD" đúng theo enum Strictness (không đổi tên biến cũ).
+     * Nếu không tìm thấy gì -> mặc định NORMAL.
      */
+    private String getSelectedStrictnessString() {
+        if (rgStrictness == null) return "NORMAL";
+        int checkedId = rgStrictness.getCheckedRadioButtonId();
+        if (checkedId == R.id.rbEasy) return "EASY";
+        if (checkedId == R.id.rbHard) return "HARD";
+        return "NORMAL";
+    }
+
+    // ================= HELPERS (GIỮ NGUYÊN) =================
+
     private String mapToExerciseTypeEnum(String id, String name) {
         String s = "";
         if (name != null) s = name.toLowerCase(Locale.ROOT);
@@ -198,7 +212,7 @@ public class ExerciseDetail extends AppCompatActivity {
 
         // HOLD
         if (s.contains("plank")) return "PLANK";
-        if (s.contains("side plank")) return "PLANK"; // nếu bạn muốn chung PLANK
+        if (s.contains("side plank")) return "PLANK";
 
         // REPS
         if (s.contains("squat")) return "SQUAT";
@@ -208,13 +222,9 @@ public class ExerciseDetail extends AppCompatActivity {
         if (s.contains("burpee")) return "BURPEE";
         if (s.contains("jumping jack")) return "JUMPING_JACK";
 
-        // default: cứ coi là bài reps
         return "SQUAT";
     }
 
-    /**
-     * Chỉ PLANK là HOLD (time). Bạn muốn thêm bài HOLD khác thì thêm vào đây.
-     */
     private boolean isHoldByExerciseType(String exerciseTypeEnum) {
         if (exerciseTypeEnum == null) return false;
         return "PLANK".equalsIgnoreCase(exerciseTypeEnum);
